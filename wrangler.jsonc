@@ -9,6 +9,6 @@
     "PROTECTED_REFS": "^refs/heads/(main|master|dev|develop)$",
     "ALERT_REPO": "DevWizardHQ/.github-private",
     "ALLOWED_PUSHERS": "",
-    "APP_BOT_LOGIN": "devwizard-force-push-guard[bot]"
+    "APP_BOT_LOGIN": "devwizardhq-force-push-guard[bot]"
   }
 }

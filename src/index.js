@@ -82,8 +82,8 @@ async function alert(env, token, title, body) {
   if (token && env.ALERT_REPO) {
     jobs.push(github(`/repos/${env.ALERT_REPO}/issues`, token, { method: 'POST', body: JSON.stringify({ title, body }) }));
   }
-  if (env.DISCORD_WEBHOOK_URL) {
-    jobs.push(fetch(env.DISCORD_WEBHOOK_URL, {
+  if (env.DISCORD_GITHUB_GUARD_WEBHOOK_URL) {
+    jobs.push(fetch(env.DISCORD_GITHUB_GUARD_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ content: `**${title}**\n${body}`.slice(0, 1990), allowed_mentions: { parse: [] } }),

@@ -9,7 +9,7 @@ const env = {
   ALERT_REPO: 'DevWizardHQ/.github-private',
   WEBHOOK_SECRET: 'test-secret',
   APP_ID: '1',
-  DISCORD_WEBHOOK_URL: 'https://discord.test/hook',
+  DISCORD_GITHUB_GUARD_WEBHOOK_URL: 'https://discord.test/hook',
 };
 const BEFORE = 'a'.repeat(40);
 const AFTER = 'b'.repeat(40);
@@ -77,7 +77,7 @@ test('end to end: force push to main is reverted and alerted to GitHub and Disco
   assert.deepEqual(patch.body, { sha: BEFORE, force: true });
   assert.equal(patch.auth, 'Bearer inst-token');
   assert.ok(calls.find((c) => c.method === 'POST' && c.url.endsWith('/repos/DevWizardHQ/.github-private/issues')).body.title.startsWith('Force push reverted'));
-  assert.ok(calls.find((c) => c.url === env.DISCORD_WEBHOOK_URL));
+  assert.ok(calls.find((c) => c.url === env.DISCORD_GITHUB_GUARD_WEBHOOK_URL));
   const jwt = calls.find((c) => c.url.endsWith('/access_tokens')).auth.split(' ')[1];
   assert.equal(JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url')).iss, '1');
 });

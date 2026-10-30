@@ -15,7 +15,7 @@ force-updates or deletes a protected branch, it resets the branch to its previou
 | `APP_ID` | secret | GitHub App ID |
 | `PRIVATE_KEY` | secret | GitHub App private key in PKCS#8 form (`openssl pkcs8 -topk8 -nocrypt -in app.pem`) |
 | `WEBHOOK_SECRET` | secret | GitHub App webhook secret |
-| `DISCORD_WEBHOOK_URL` | secret | Discord channel webhook URL (optional) |
+| `DISCORD_GITHUB_GUARD_WEBHOOK_URL` | secret | Discord channel webhook URL (optional) |
 
 ## Deploy
 
@@ -25,7 +25,7 @@ npx wrangler deploy
 npx wrangler secret put APP_ID
 npx wrangler secret put PRIVATE_KEY < app.pkcs8.pem
 npx wrangler secret put WEBHOOK_SECRET
-npx wrangler secret put DISCORD_WEBHOOK_URL
+npx wrangler secret put DISCORD_GITHUB_GUARD_WEBHOOK_URL
 ```
 
 ## GitHub App

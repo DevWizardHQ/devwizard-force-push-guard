@@ -1,0 +1,14 @@
+{
+  "name": "devwizard-force-push-guard",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "account_id": "a9321e3954bc6b3efb8f51237f96d0f2",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "PROTECTED_REFS": "^refs/heads/(main|master|dev|develop)$",
+    "ALERT_REPO": "DevWizardHQ/.github-private",
+    "ALLOWED_PUSHERS": "",
+    "APP_BOT_LOGIN": "devwizard-force-push-guard[bot]"
+  }
+}

@@ -4,6 +4,7 @@
   "compatibility_date": "2026-09-01",
   "account_id": "a9321e3954bc6b3efb8f51237f96d0f2",
   "workers_dev": true,
+  "routes": [{ "pattern": "guard.devwizard.net", "custom_domain": true }],
   "observability": { "enabled": true },
   "vars": {
     "PROTECTED_REFS": "^refs/heads/(main|master|dev|develop)$",

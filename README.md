@@ -30,8 +30,10 @@ npx wrangler secret put DISCORD_WEBHOOK_URL
 
 ## GitHub App
 
-Owned by DevWizardHQ and installed on all repositories. It needs Contents (read and write), Issues (read and
-write) and Metadata (read), and subscribes to the Push event. Its webhook URL is the Worker URL.
+`DevWizardHQ Force Push Guard` (`devwizardhq-force-push-guard`, app ID 5536853) is owned by DevWizardHQ and
+installed on all repositories. It needs Contents (read and write), Issues (read and
+write) and Metadata (read), and subscribes to the Push event. Its webhook URL is `https://github-guard.devwizard.net`, the Worker's custom domain on the `devwizard.net` zone.
+The `workers.dev` URL also stays reachable.
 
 ## Limits
 

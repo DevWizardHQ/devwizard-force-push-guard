@@ -2,7 +2,7 @@
 
 A Cloudflare Worker that receives push events from the `DevWizardHQ Force Push Guard` GitHub App. When a push
 force-updates or deletes a protected branch, it resets the branch to its previous commit, opens an issue in
-`DevWizardHQ/.github-private` and posts to Discord.
+`DevWizardHQ/.github-private` and posts to Discord and Telegram.
 
 ## Config
 
@@ -16,6 +16,8 @@ force-updates or deletes a protected branch, it resets the branch to its previou
 | `PRIVATE_KEY` | secret | GitHub App private key in PKCS#8 form (`openssl pkcs8 -topk8 -nocrypt -in app.pem`) |
 | `WEBHOOK_SECRET` | secret | GitHub App webhook secret |
 | `DISCORD_GITHUB_GUARD_WEBHOOK_URL` | secret | Discord channel webhook URL (optional) |
+| `TELEGRAM_BOT_TOKEN` | secret | Telegram bot token from @BotFather (optional) |
+| `TELEGRAM_CHAT_ID` | secret | Telegram chat or group ID that receives alerts (optional) |
 
 ## Deploy
 
@@ -26,6 +28,8 @@ npx wrangler secret put APP_ID
 npx wrangler secret put PRIVATE_KEY < app.pkcs8.pem
 npx wrangler secret put WEBHOOK_SECRET
 npx wrangler secret put DISCORD_GITHUB_GUARD_WEBHOOK_URL
+npx wrangler secret put TELEGRAM_BOT_TOKEN
+npx wrangler secret put TELEGRAM_CHAT_ID
 ```
 
 ## GitHub App

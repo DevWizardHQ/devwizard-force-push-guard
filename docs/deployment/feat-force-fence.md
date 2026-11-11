@@ -51,7 +51,7 @@
 8. `curl "https://api.telegram.org/bot<TOKEN>/setWebhook" -d url=https://<worker-host>/telegram -d secret_token=<TELEGRAM_WEBHOOK_SECRET>`
    points the bot at the Worker.
 9. Rename the GitHub App to "Force Fence", make it public, and fill in the description, homepage
-   (`https://github.com/DevWizardHQ/force-fence`) and logo (`docs/assets/logo.png`).
+   (`https://github.com/DevWizardHQ/force-fence`) and logo (`docs/assets/logo-light.png`).
 10. Open the settings page from the installation's Configure page and save the alert repository, the Discord webhook
     and the Telegram chats.
 11. After a day without problems, run `npx wrangler secret delete DISCORD_GITHUB_GUARD_WEBHOOK_URL`.

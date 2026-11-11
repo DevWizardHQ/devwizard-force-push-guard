@@ -52,11 +52,17 @@ function sameString(a, b) {
   return diff === 0;
 }
 
+function sameSite(request, url) {
+  const origin = request.headers.get('origin');
+  if (origin && origin !== 'null') return origin === url.origin;
+  return request.headers.get('sec-fetch-site') === 'same-origin';
+}
+
 const SECURITY_HEADERS = {
   'content-type': 'text/html; charset=utf-8',
   'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
   'x-content-type-options': 'nosniff',
-  'referrer-policy': 'no-referrer',
+  'referrer-policy': 'same-origin',
   'cache-control': 'no-store',
 };
 
@@ -347,7 +353,7 @@ export async function handleSettings(request, env) {
     return page('Alert settings', settingsView(id, account, await readSettings(env, id), notice));
   }
   if (request.method !== 'POST') return page('Not found', '', 404);
-  if (request.headers.get('origin') !== url.origin) return page('Blocked', '<section><p>This request came from another site.</p></section>', 403);
+  if (!sameSite(request, url)) return page('Blocked', '<section><p>This request came from another site.</p></section>', 403);
   if (!action) return saveSettings(request, env, id, account);
   if (action === '/telegram') return connectTelegram(env, id, account);
   if (action === '/telegram/remove') return removeTelegram(request, env, id);

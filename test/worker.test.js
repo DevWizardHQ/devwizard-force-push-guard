@@ -164,6 +164,16 @@ test('our own revert is ignored without asking for a token', async () => {
   assert.equal(calls.some((c) => c.url.endsWith('/access_tokens') || c.method === 'PATCH'), false);
 });
 
+test('a renamed App is recognised even when the old slug is cached', async () => {
+  await run(push({ sender: { login: 'force-fence[bot]', type: 'Bot' } }));
+  const env = await makeEnv();
+  const calls = mockFetch([[/api\.github\.com\/app$/, () => Response.json({ slug: 'renamed-fence' })]]);
+  const body = JSON.stringify(push({ sender: { login: 'renamed-fence[bot]', type: 'Bot' } }));
+  const res = await worker.fetch(new Request('https://w.test/', { method: 'POST', body, headers: { 'x-github-event': 'push', 'x-hub-signature-256': await sign(body) } }), env, { waitUntil() {} });
+  assert.equal(await res.text(), 'ignored');
+  assert.equal(calls.filter((c) => c.url.endsWith('/app')).length, 1);
+});
+
 test('a different bot force-pushing is reverted', async () => {
   const { text } = await run(push({ sender: { login: 'some-bot[bot]', type: 'Bot' } }));
   assert.match(text, /^Reverted/);

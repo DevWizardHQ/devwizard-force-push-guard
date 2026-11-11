@@ -94,7 +94,7 @@ async function loadConfig(payload, token) {
 async function isOwnBot(env, sender) {
   if (sender.type !== 'Bot') return false;
   try {
-    return sender.login === (await appBotLogin(env));
+    return sender.login === (await appBotLogin(env)) || sender.login === (await appBotLogin(env, { refresh: true }));
   } catch (err) {
     // Unknown identity: treat a bot push as our own revert so two reverts can never undo each other in a loop.
     console.error(err);

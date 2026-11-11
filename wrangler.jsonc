@@ -6,6 +6,7 @@
   "workers_dev": true,
   "routes": [{ "pattern": "github-guard.devwizard.net", "custom_domain": true }],
   "observability": { "enabled": true },
+  "assets": { "directory": "./public" },
   "d1_databases": [{ "binding": "DB", "database_name": "force-fence", "database_id": "9e96c8e6-45b9-48ae-b4f2-c61093f1fab0", "migrations_dir": "migrations" }],
   "vars": {
     "GITHUB_CLIENT_ID": "Iv23lixjzwxxUaiEWi5Y",

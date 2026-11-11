@@ -8,7 +8,7 @@
 
 | Environment | Date | Deployed by | Commit | Result |
 |---|---|---|---|---|
-| production | | | | |
+| production | 2026-11-11 | Claude for iqbalhasandev | `cb38c17` | Worker renamed, D1 migrated, deployed. App renamed to Force Fence. Live force-push test reverted `main` and opened the alert issue. Pending: client secret, settings page, old Discord secret removal. |
 
 ## Before deploying
 

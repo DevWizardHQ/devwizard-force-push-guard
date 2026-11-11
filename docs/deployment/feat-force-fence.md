@@ -2,7 +2,7 @@
 
 | Branch | PR | Downtime | Migrations |
 |---|---|---|---|
-| `feat/force-fence` | TBD | None expected. Alerts pause for about a minute while the App is renamed. | 1 D1 migration (`migrations/0001_init.sql`) |
+| `feat/force-fence` | [#2](https://github.com/DevWizardHQ/force-fence/pull/2) | None expected. Alerts pause for about a minute while the App is renamed. | 1 D1 migration (`migrations/0001_init.sql`) |
 
 ## Deploy log
 

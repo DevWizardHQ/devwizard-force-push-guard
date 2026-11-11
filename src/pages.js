@@ -3,6 +3,11 @@ import { ICONS } from './icons.js';
 const REPO_URL = 'https://github.com/DevWizardHQ/force-fence';
 const CHAT_KINDS = { private: 'Direct message', group: 'Group', supergroup: 'Group', channel: 'Channel' };
 
+export function maskDiscord(url) {
+  const match = url?.match(/^(https:\/\/[^/]+\/api\/webhooks\/\d+\/)([\w-]+)$/);
+  return match ? `${match[1]}••••••••${match[2].slice(-4)}` : '';
+}
+
 export const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 
 const SECURITY_HEADERS = {
@@ -119,7 +124,6 @@ export const errorNotice = (errors) => `<div class="notice bad" role="alert">${I
 export function settingsView({ id, account, settings, bot, maxChats, notice = '' }) {
   const chats = settings.telegramChats ?? [];
   const discord = Boolean(settings.discordWebhookUrl);
-  const webhookId = settings.discordWebhookUrl?.match(/\/webhooks\/(\d+)\//)?.[1] ?? 'saved';
   const chatItems = chats.map((chat) => `<li class="chip"><span>${esc(chat.title)}<small>${esc(CHAT_KINDS[chat.type] ?? chat.type)}</small></span>
 <form method="post" action="/settings/${id}/telegram/remove"><input type="hidden" name="chat" value="${esc(chat.id)}"><button class="btn quiet small" type="submit">Disconnect</button></form></li>`).join('');
   return `${notice}
@@ -137,9 +141,9 @@ export function settingsView({ id, account, settings, bot, maxChats, notice = ''
 <span class="glyph discord">${ICONS.discord}</span>
 <div>
 <div class="item-head"><h2>Discord</h2><span class="pill${discord ? ' on' : ''}">${discord ? 'Connected' : 'Not connected'}</span></div>
-<p class="hint">${discord ? `Saved webhook <strong>${esc(webhookId)}</strong>. The rest of the URL is a secret, so it is never shown again. Paste a new URL only to replace it.` : 'Paste a channel webhook URL. In Discord, open the channel settings, then Integrations, then Webhooks.'}</p>
-<label for="discord">${discord ? 'Replace the webhook URL' : 'Webhook URL'}</label>
-<input id="discord" name="discordWebhookUrl" type="url" placeholder="${discord ? 'Saved. Leave empty to keep it.' : 'https://discord.com/api/webhooks/…'}" autocomplete="off" spellcheck="false">
+<p class="hint">${discord ? 'Saved. The secret part of the URL is masked. Paste a new URL to replace it.' : 'Paste a channel webhook URL. In Discord, open the channel settings, then Integrations, then Webhooks.'}</p>
+<label for="discord">Webhook URL</label>
+<input id="discord" name="discordWebhookUrl" type="text" value="${esc(maskDiscord(settings.discordWebhookUrl))}" placeholder="https://discord.com/api/webhooks/…" autocomplete="off" spellcheck="false">
 ${discord ? '<label class="check"><input type="checkbox" name="removeDiscord" value="1"> Disconnect Discord</label>' : ''}
 </div>
 </div>

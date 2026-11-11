@@ -1,0 +1,44 @@
+name: Bug report
+description: Something did not work as documented
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Never paste webhook secrets, private keys or bot tokens here.
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: How do you run Force Fence?
+      options:
+        - Hosted App
+        - Self-hosted Worker
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: Include your .github/force-fence.yml and the push you made, if relevant.
+      render: yaml
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Self-hosters only. Release tag or commit of the Worker you deployed.
+      placeholder: 1.0.0
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or alert issue text
+      description: Remove tokens, secrets and private repository names before pasting.

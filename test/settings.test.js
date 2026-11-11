@@ -65,7 +65,7 @@ test('settings are encrypted at rest and bound to their installation', async () 
 test('settings pages are off without the database binding', async () => {
   const res = await call(await makeEnv({ DB: undefined }), '/setup?installation_id=42');
   assert.equal(res.status, 404);
-  assert.match(await res.text(), /not enabled/);
+  assert.match(await res.text(), /not turned on/);
 });
 
 test('setup without a session starts GitHub sign-in with a signed state', async () => {
@@ -101,6 +101,25 @@ test('sign-in grants an installation only to admins of every covered repository'
   const partial = await signInFlow(env);
   assert.equal(partial.status, 403);
   assert.match(await partial.text(), /admin access to every repository/);
+});
+
+test('the account chooser hides other people\'s personal accounts', async () => {
+  const env = await makeEnv();
+  mockFetch([
+    ['/login/oauth/access_token', () => Response.json({ access_token: 'user-token' })],
+    [/api\.github\.com\/user$/, () => Response.json({ login: 'alice' })],
+    [/\/user\/installations\?/, () => Response.json({ installations: [
+      { id: 1, account: { login: 'alice', type: 'User' } },
+      { id: 2, account: { login: 'bob', type: 'User' } },
+      { id: 3, account: { login: 'acme', type: 'Organization' } },
+    ] })],
+  ]);
+  const start = await call(env, '/settings');
+  const state = new URL(start.headers.get('location')).searchParams.get('state');
+  const text = await (await call(env, `/auth/callback?code=abc&state=${state}`, { cookie: start.headers.get('set-cookie').split(';')[0] })).text();
+  assert.match(text, /installation_id=1/);
+  assert.match(text, /installation_id=3/);
+  assert.doesNotMatch(text, /bob/);
 });
 
 test('callback with a forged state is refused', async () => {
@@ -212,6 +231,6 @@ test('test alert reports each channel', async () => {
     ['discord.com', () => new Response('', { status: 404 })],
   ]);
   const text = await (await call(env, '/settings/42/test', { method: 'POST', cookie })).text();
-  assert.match(text, /Discord: POST to discord\.com failed: 404/);
-  assert.match(text, /Telegram \(Ops\): sent/);
+  assert.match(text, /<strong>Discord<\/strong><p>POST to discord\.com failed: 404<\/p>/);
+  assert.match(text, /<strong>Telegram \(Ops\)<\/strong><p>Sent<\/p>/);
 });

@@ -10,6 +10,8 @@ const env = {
   WEBHOOK_SECRET: 'test-secret',
   APP_ID: '1',
   DISCORD_GITHUB_GUARD_WEBHOOK_URL: 'https://discord.test/hook',
+  TELEGRAM_BOT_TOKEN: 'tg-token',
+  TELEGRAM_CHAT_ID: '123',
 };
 const BEFORE = 'a'.repeat(40);
 const AFTER = 'b'.repeat(40);
@@ -69,7 +71,7 @@ async function run(payload, { currentSha = AFTER, event = 'push', badSig = false
   return { res, text: await res.text(), calls };
 }
 
-test('end to end: force push to main is reverted and alerted to GitHub and Discord', async () => {
+test('end to end: force push to main is reverted and alerted to GitHub, Discord and Telegram', async () => {
   const { text, calls } = await run(push());
   assert.match(text, /^Reverted `heads\/main`/);
   const patch = calls.find((c) => c.method === 'PATCH');
@@ -78,6 +80,7 @@ test('end to end: force push to main is reverted and alerted to GitHub and Disco
   assert.equal(patch.auth, 'Bearer inst-token');
   assert.ok(calls.find((c) => c.method === 'POST' && c.url.endsWith('/repos/DevWizardHQ/.github-private/issues')).body.title.startsWith('Force push reverted'));
   assert.ok(calls.find((c) => c.url === env.DISCORD_GITHUB_GUARD_WEBHOOK_URL));
+  assert.equal(calls.find((c) => c.url === 'https://api.telegram.org/bottg-token/sendMessage').body.chat_id, '123');
   const jwt = calls.find((c) => c.url.endsWith('/access_tokens')).auth.split(' ')[1];
   assert.equal(JSON.parse(Buffer.from(jwt.split('.')[1], 'base64url')).iss, '1');
 });

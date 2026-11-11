@@ -1,9 +1,15 @@
 {
-  "name": "devwizard-force-push-guard",
+  "name": "force-fence",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "deploy": "wrangler deploy"
-  }
+  },
+  "dependencies": {
+    "js-yaml": "5.5.0"
+  },
+  "version": "1.0.0",
+  "description": "GitHub App that reverts force pushes to protected branches and alerts your team",
+  "license": "MIT"
 }

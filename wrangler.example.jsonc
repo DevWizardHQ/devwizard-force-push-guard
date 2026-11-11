@@ -1,0 +1,13 @@
+{
+  "name": "force-fence",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "routes": [{ "pattern": "force-fence.example.com", "custom_domain": true }],
+  "observability": { "enabled": true },
+  "d1_databases": [{ "binding": "DB", "database_name": "force-fence", "database_id": "<d1-database-id>", "migrations_dir": "migrations" }],
+  "vars": {
+    "GITHUB_CLIENT_ID": "<github-app-client-id>",
+    "TELEGRAM_BOT_USERNAME": "<your-bot-username>"
+  }
+}

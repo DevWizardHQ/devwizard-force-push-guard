@@ -6,9 +6,9 @@
   "workers_dev": true,
   "routes": [{ "pattern": "github-guard.devwizard.net", "custom_domain": true }],
   "observability": { "enabled": true },
-  "d1_databases": [{ "binding": "DB", "database_name": "force-fence", "database_id": "<d1-database-id>", "migrations_dir": "migrations" }],
+  "d1_databases": [{ "binding": "DB", "database_name": "force-fence", "database_id": "9e96c8e6-45b9-48ae-b4f2-c61093f1fab0", "migrations_dir": "migrations" }],
   "vars": {
-    "GITHUB_CLIENT_ID": "<github-app-client-id>",
+    "GITHUB_CLIENT_ID": "",
     "TELEGRAM_BOT_USERNAME": "ForceFenceBot"
   }
 }

@@ -46,7 +46,7 @@ export async function installationToken(env, installationId) {
 }
 
 let appSlug;
-export async function appBotLogin(env) {
-  appSlug ??= (await github('/app', await appJwt(env))).slug;
+export async function appBotLogin(env, { refresh = false } = {}) {
+  if (refresh || !appSlug) appSlug = (await github('/app', await appJwt(env))).slug;
   return `${appSlug}[bot]`;
 }

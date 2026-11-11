@@ -1,4 +1,9 @@
-<p align="center"><img src="docs/assets/logo.svg" alt="Force Fence logo" width="96"></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.png">
+    <img src="docs/assets/logo-light.png" alt="Force Fence: a wizard guarding a branch shield" width="200">
+  </picture>
+</p>
 
 # Force Fence
 

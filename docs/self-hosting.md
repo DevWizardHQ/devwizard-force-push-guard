@@ -121,7 +121,7 @@ Your own bot serves every installation of your App. The hosted bot `@ForceFenceB
 
    | Command | What to set |
    |---|---|
-   | `/setuserpic` | The logo from `docs/assets/logo.png` |
+   | `/setuserpic` | The logo from `docs/assets/logo-light.png` |
    | `/setabouttext` | A one-line description of the bot |
    | `/setdescription` | What people see before they start the bot |
    | `/setcommands` | `start - Link this chat with your Force Fence code` |

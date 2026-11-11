@@ -1,6 +1,6 @@
 import { appJwt, b64url, github, installationToken } from './github.js';
 import { alert, sendTelegram } from './alerts.js';
-import { chooserView, errorNotice, esc, message, page, resultsView, savedNotice, settingsView, telegramView } from './pages.js';
+import { chooserView, errorNotice, esc, maskDiscord, message, page, resultsView, savedNotice, settingsView, telegramView } from './pages.js';
 import { consumeLinkCode, createLinkCode, LINK_TTL_SECONDS, readSettings, settingsEnabled, writeSettings } from './store.js';
 
 const encoder = new TextEncoder();
@@ -153,7 +153,8 @@ async function saveSettings(request, env, id, account) {
   const form = await request.formData();
   const settings = await readSettings(env, id);
   const alertRepo = String(form.get('alertRepo') || '').trim();
-  const discord = String(form.get('discordWebhookUrl') || '').trim();
+  const typed = String(form.get('discordWebhookUrl') || '').trim();
+  const discord = typed === maskDiscord(settings.discordWebhookUrl) ? '' : typed;
   const errors = [];
 
   if (alertRepo && !REPO_NAME.test(alertRepo)) errors.push('The alert repository must look like owner/name.');

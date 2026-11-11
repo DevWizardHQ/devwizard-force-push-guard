@@ -154,6 +154,16 @@ test('POSTs from another origin or without a session are refused', async () => {
   const cookie = await sessionCookie(env);
   assert.equal((await call(env, '/settings/42', { method: 'POST', cookie, origin: 'https://evil.test', form: {} })).status, 403);
   assert.equal((await call(env, '/settings/42', { method: 'POST', form: {} })).status, 401);
+  assert.equal((await call(env, '/settings/42', { method: 'POST', cookie, origin: 'null', form: {}, headers: { 'sec-fetch-site': 'cross-site' } })).status, 403);
+});
+
+test('browsers that send Origin: null on same-site forms are accepted via Sec-Fetch-Site', async () => {
+  const env = await makeEnv();
+  const cookie = await sessionCookie(env);
+  mockFetch([]);
+  const res = await call(env, '/settings/42/telegram', { method: 'POST', cookie, origin: 'null', headers: { 'sec-fetch-site': 'same-origin' } });
+  assert.equal(res.status, 200);
+  assert.equal(res.headers.get('referrer-policy'), 'same-origin');
 });
 
 test('Telegram linking: group, channel, reused code and wrong secret', async () => {

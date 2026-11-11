@@ -163,6 +163,7 @@ test('saving validates input, checks the alert repo and never echoes the Discord
   assert.match(view, /Saved\./);
   assert.match(view, /value="acme\/alerts"/);
   assert.equal(view.includes('secret-token'), false);
+  assert.match(view, /Saved webhook <strong>123<\/strong>/);
 
   await call(env, '/settings/42', { method: 'POST', cookie, form: { alertRepo: 'acme/alerts', removeDiscord: '1' } });
   assert.deepEqual(await readSettings(env, 42), { alertRepo: 'acme/alerts' });

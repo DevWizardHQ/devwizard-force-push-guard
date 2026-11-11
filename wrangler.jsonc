@@ -1,15 +1,14 @@
 {
-  "name": "devwizard-force-push-guard",
+  "name": "force-fence",
   "main": "src/index.js",
   "compatibility_date": "2026-09-01",
   "account_id": "a9321e3954bc6b3efb8f51237f96d0f2",
   "workers_dev": true,
   "routes": [{ "pattern": "github-guard.devwizard.net", "custom_domain": true }],
   "observability": { "enabled": true },
+  "d1_databases": [{ "binding": "DB", "database_name": "force-fence", "database_id": "<d1-database-id>", "migrations_dir": "migrations" }],
   "vars": {
-    "PROTECTED_REFS": "^refs/heads/(main|master|dev|develop)$",
-    "ALERT_REPO": "DevWizardHQ/.github-private",
-    "ALLOWED_PUSHERS": "",
-    "APP_BOT_LOGIN": "devwizardhq-force-push-guard[bot]"
+    "GITHUB_CLIENT_ID": "<github-app-client-id>",
+    "TELEGRAM_BOT_USERNAME": "ForceFenceBot"
   }
 }
